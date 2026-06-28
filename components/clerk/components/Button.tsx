@@ -1,5 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 
 interface Props extends TouchableOpacityProps {
   variant?: "primary" | "secondary";
@@ -14,14 +13,9 @@ export function Button({ children, variant = "primary", ...props }: Props) {
       {...props}
     >
       {variant === "secondary" ? (
-        <LinearGradient
-          colors={['#6d53f8', '#5c40f7']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          style={styles.secondaryWrapper}
-        >
-        {typeof(children) === 'string' ? <Text style={styles.secondaryText}>{children}</Text> : children}
-        </LinearGradient>
+        <View style={styles.secondaryWrapper}>
+          {typeof(children) === 'string' ? <Text style={styles.secondaryText}>{children}</Text> : children}
+        </View>
       ) : (
         typeof(children) === 'string' ? <Text>{children}</Text> : children
       )}
@@ -41,7 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    gap: 8
+    gap: 8,
+    backgroundColor: '#9DC228',
   },
   secondaryText: {
     color: '#fbfaff'

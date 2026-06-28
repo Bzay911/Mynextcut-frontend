@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333333',
+    color: '#ffffff',
   },
   labelContainer: {
     flexDirection: 'row',
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     fontSize: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
+    color: '#ffffff',
   },
   inputError: {
     borderColor: '#d34742',

@@ -16,7 +16,7 @@ export default function TabLayout() {
     return (
       <Stack>
         <Stack.Protected guard={isSignedIn}>
-          <Stack.Screen name="(protected)" />
+          <Stack.Screen name="(protected)" options={{ headerShown: false }} />
         </Stack.Protected>
         <Stack.Protected guard={!isSignedIn}>
           <Stack.Screen name="(public)" options={{ headerShown: false }} />

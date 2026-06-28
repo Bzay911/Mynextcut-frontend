@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from './Button'
 import { StyleProp, Text, TouchableOpacityProps, ViewStyle, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -18,10 +17,11 @@ function ContinueButton({ style, ...props }: Props) {
 
 const styles = StyleSheet.create({
   text: {
-    color: '#fbfaff'
+    color: '#000000',
+    fontSize: 16,
   },
   icon: {
-    color: '#c5bbfc'
+    color: '#000000'
   },
 });
 

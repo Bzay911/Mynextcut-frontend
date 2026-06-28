@@ -127,7 +127,7 @@ export function OAuthButton({ strategy, children, hideText, scheme }: Props) {
 
 const styles = StyleSheet.create({
   socialButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000000',
     borderRadius: 8,
     padding: 8,
     height: 40,
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    gap: 8
+    gap: 8,
   },
   providerLogo: {
     width: 18,
     height: 18,
   },
   buttonText: {
-    color: '#24292f',
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: '500',
   },

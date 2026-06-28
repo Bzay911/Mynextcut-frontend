@@ -29,7 +29,7 @@ export default Form
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#000000",
     justifyContent: "center",
   },
   contentWrapper: {
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#000000",
   },
   headerTitle: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#424242",
+    color: "#ffffff",
     textAlign: "center",
     lineHeight: 34,
     marginBottom: 4
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   formContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#000000",
     paddingHorizontal: 24,
     paddingTop: 20,
     paddingBottom: 20,
