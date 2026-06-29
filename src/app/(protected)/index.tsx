@@ -1,11 +1,15 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { SignOutButton } from "../../../components/clerk/SignOutButton";
 
 export default function ProtectedIndex(){
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Protected Index Page</Text> 
+        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+         <Pressable onPress={() => console.log("Pressed!")}>
+            <Text>Get Credits</Text>
+         </Pressable>
+
             <SignOutButton />
-        </View>
+        </ScrollView>
     )
+
 }

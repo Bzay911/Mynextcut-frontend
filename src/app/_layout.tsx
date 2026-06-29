@@ -3,6 +3,7 @@ import { useColorScheme } from "react-native";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { AnimatedSplashOverlay } from "@/components/animated-icon";
+import "../global.css";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
