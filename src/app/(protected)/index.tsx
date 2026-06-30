@@ -2,9 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const topPicks = [
+const hairStyles = [
   {
-    title: "Short Hair",
+    title: "All",
     icon: "cut-outline",
   },
   {
@@ -87,23 +87,27 @@ export default function ProtectedIndex() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
-        <Pressable
-          onPress={() => console.log("Pressed!")}
-          style={{ backgroundColor: "#9DC228" }}
-          className="self-end items-center justify-center rounded-full px-6 py-4"
-        >
-          <Text>Get Credits</Text>
-        </Pressable>
+        <View className="flex-row items-center justify-between gap-4">
+          <Text className="text-3xl font-bold text-white">MyNextCut</Text>
 
-        <Text className="mt-2 text-3xl font-bold text-white">MyNextCut</Text>
+          <Pressable
+            onPress={() => console.log("Pressed!")}
+            style={{ backgroundColor: "#9DC228" }}
+            className="items-center justify-center rounded-full px-6 py-4"
+          >
+            <Text>Get Credits</Text>
+          </Pressable>
+        </View>
 
-        <Text className="mt-6 text-lg font-semibold text-white">Top Picks</Text>
+        <Text className="mt-6 text-lg font-semibold text-white">
+          Choose your style
+        </Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           className="mt-4"
         >
-          {topPicks.map((item) => (
+          {hairStyles.map((item) => (
             <View key={item.title} className="mr-6 items-center">
               <View className="mb-3 h-14 w-14 items-center justify-center rounded-full bg-zinc-800">
                 <Ionicons name={item.icon} size={26} color="#9DC228" />
@@ -116,7 +120,7 @@ export default function ProtectedIndex() {
         </ScrollView>
 
         <Text className="mt-6 text-lg font-semibold text-white">
-          Trending Haircuts
+          Trending now
         </Text>
         <ScrollView
           horizontal
@@ -126,7 +130,7 @@ export default function ProtectedIndex() {
           {trendingHaircuts.map((item) => (
             <View
               key={item.title}
-              className="mr-4 w-36 overflow-hidden rounded-3xl bg-zinc-900"
+              className="mr-4 w-36 overflow-hidden rounded-xl bg-zinc-900"
             >
               <Image
                 source={item.image}
@@ -141,7 +145,7 @@ export default function ProtectedIndex() {
         </ScrollView>
 
         <Text className="mt-6 text-lg font-semibold text-white">
-          More Haircuts
+          More to try on
         </Text>
         <ScrollView
           horizontal
