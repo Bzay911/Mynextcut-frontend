@@ -1,4 +1,5 @@
 import { useAuth } from "@clerk/clerk-expo";
+import { StyleSheet } from "react-native";
 import { Button } from "./components/Button";
 
 interface Props {
@@ -12,7 +13,7 @@ export function SignOutButton({ redirectUrl = "/" }: Props) {
     try {
       await signOut({
         // @ts-ignore - redirectUrl is supported but not in the type definitions
-        redirectUrl
+        redirectUrl,
       });
     } catch (error) {
       console.error("Sign out error:", error);
@@ -20,10 +21,17 @@ export function SignOutButton({ redirectUrl = "/" }: Props) {
   }
 
   return (
-    <Button onPress={onSignOutPress}>
+    <Button onPress={onSignOutPress} textStyle={styles.text}>
       Sign out
     </Button>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    color: "#ffffff",
+    fontSize: 16,
+  },
+});
 
 export default SignOutButton;

@@ -89,7 +89,6 @@ export default function ProtectedIndex() {
       >
         <View className="flex-row items-center justify-between gap-4">
           <Text className="text-3xl font-bold text-white">MyNextCut</Text>
-
           <Pressable
             onPress={() => console.log("Pressed!")}
             style={{ backgroundColor: "#9DC228" }}
@@ -144,7 +143,7 @@ export default function ProtectedIndex() {
           ))}
         </ScrollView>
 
-        <Text className="mt-6 text-lg font-semibold text-white">
+         <Text className="mt-6 text-lg font-semibold text-white">
           More to try on
         </Text>
         <ScrollView

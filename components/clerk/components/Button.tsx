@@ -1,11 +1,24 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from "react-native";
 
 interface Props extends TouchableOpacityProps {
   variant?: "primary" | "secondary";
+  textStyle?: TextStyle;
   children: React.ReactNode | string;
 }
 
-export function Button({ children, variant = "primary", ...props }: Props) {
+export function Button({
+  children,
+  variant = "primary",
+  textStyle,
+  ...props
+}: Props) {
   return (
     <TouchableOpacity
       style={props.style || styles.buttonContainer}
@@ -14,10 +27,16 @@ export function Button({ children, variant = "primary", ...props }: Props) {
     >
       {variant === "secondary" ? (
         <View style={styles.secondaryWrapper}>
-          {typeof(children) === 'string' ? <Text style={styles.secondaryText}>{children}</Text> : children}
+          {typeof children === "string" ? (
+            <Text style={[styles.secondaryText, textStyle]}>{children}</Text>
+          ) : (
+            children
+          )}
         </View>
+      ) : typeof children === "string" ? (
+        <Text style={textStyle}>{children}</Text>
       ) : (
-        typeof(children) === 'string' ? <Text>{children}</Text> : children
+        children
       )}
     </TouchableOpacity>
   );
@@ -26,8 +45,8 @@ export function Button({ children, variant = "primary", ...props }: Props) {
 const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 10,
-    marginTop: 8,
-    overflow: 'hidden',
+    // marginTop: 8,
+    overflow: "hidden",
   },
   secondaryWrapper: {
     borderRadius: 10,
@@ -36,11 +55,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     gap: 8,
-    backgroundColor: '#9DC228',
+    backgroundColor: "#9DC228",
   },
   secondaryText: {
-    color: '#fbfaff'
-  }
+    color: "#fbfaff",
+  },
 });
 
 export default Button;
