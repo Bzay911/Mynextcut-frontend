@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#ffffff",
     fontSize: 16,
+    fontWeight: "semibold",
   },
 });
 
