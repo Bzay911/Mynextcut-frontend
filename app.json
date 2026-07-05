@@ -54,7 +54,22 @@
           "recordAudioAndroid": true,
           "barcodeScannerEnabled": true
         }
-      ]
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.359637097902-00ajtvhe6fv7rrqbrp8kt4s08e8muk81"
+        }
+      ],
+      [
+
+      "expo-build-properties",
+      {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ] 
     ],
     "experiments": {
       "typedRoutes": true,

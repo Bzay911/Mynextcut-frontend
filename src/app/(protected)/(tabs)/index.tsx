@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 const hairStyles = [
   {
@@ -40,47 +41,49 @@ const hairStyles = [
 const trendingHaircuts = [
   {
     title: "Low Fade",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Taper Fade",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Buzz Cut",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Crew Cut",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "French Crop",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Textured Crop",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Pompadour",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Quiff",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Side Part",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
   {
     title: "Mullet",
-    image: require("../../../assets/images/app-images/mullet.jpeg"),
+    image: require("../../../../assets/images/app-images/mullet.jpeg"),
   },
 ];
 
+
 export default function ProtectedIndex() {
+  const router = useRouter();
   return (
     <SafeAreaView className="flex-1 bg-black p-4">
       <ScrollView
@@ -90,7 +93,7 @@ export default function ProtectedIndex() {
         <View className="flex-row items-center justify-between gap-4">
           <Text className="text-4xl font-bold text-white">MyNextCut</Text>
           <Pressable
-            onPress={() => console.log("Pressed!")}
+            onPress={() => router.push("/(protected)/get-credits")}
             style={{ backgroundColor: "#9DC228" }}
             className="items-center justify-center rounded-full px-6 py-4"
           >

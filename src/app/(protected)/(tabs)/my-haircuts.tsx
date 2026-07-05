@@ -19,7 +19,7 @@ export default function MyHaircuts() {
         </Text>
         <View className="absolute bottom-0 right-10">
           <ImageBackground
-            source={require("../../../assets/images/app-images/my-haircuts-palceholder.png")}
+            source={require("../../../../assets/images/app-images/my-haircuts-palceholder.png")}
             className="h-80 w-80"
             resizeMode="cover"
           />

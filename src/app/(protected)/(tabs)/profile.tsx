@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { SignOutButton } from "../../../components/clerk/SignOutButton";
+import { SignOutButton } from "../../../../components/clerk/SignOutButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
