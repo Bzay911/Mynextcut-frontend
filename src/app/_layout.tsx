@@ -1,39 +1,40 @@
 import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
-import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { tokenCache } from "@clerk/clerk-expo/token-cache";
+// import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+// import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { AnimatedSplashOverlay } from "@/components/animated-icon";
 import "../global.css";
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+import {useAuth, AuthProvider} from "../../contexts/auth-context";
 
   function RootLayoutWithAuth() {
-    const { isSignedIn, isLoaded } = useAuth();
-
-    if (!isLoaded) {
+    const {accessToken, loading} = useAuth();
+    
+    if (loading) {
       return null;
     }
+    
     return (
       <Stack>
-        <Stack.Protected guard={isSignedIn}>
+        <Stack.Protected guard={!!accessToken}>
           <Stack.Screen name="(protected)" options={{ headerShown: false }} />
         </Stack.Protected>
-        <Stack.Protected guard={!isSignedIn}>
+        <Stack.Protected guard={!accessToken}>
           <Stack.Screen name="(public)" options={{ headerShown: false }} />
         </Stack.Protected>
       </Stack>
     );
   }
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+  
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <AnimatedSplashOverlay />
-      <ClerkProvider
-        tokenCache={tokenCache}
-        publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
-      >
+      <AuthProvider>
         <RootLayoutWithAuth />
-      </ClerkProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

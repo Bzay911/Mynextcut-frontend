@@ -1,5 +1,12 @@
 import { useRouter } from "expo-router";
-import { Pressable, Text, View, ImageBackground, Alert } from "react-native";
+import {
+  Pressable,
+  Text,
+  View,
+  ImageBackground,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
@@ -10,35 +17,41 @@ import {
   isSuccessResponse,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
+import { useAuth } from "../../../contexts/auth-context";
 
 export default function SignIn() {
   const router = useRouter();
   const [googleLoading, setGoogleLoading] = useState(false);
+  const { login } = useAuth();
 
   GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
   });
 
-  //       const handleGoogleSignin = async (idToken: string) => {
-  //     try {
-  //       const res = await fetch(apiUrl("api/auth/handleGoogleSignin"), {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ idToken, expoPushToken: expoPushToken?.data }),
-  //       });
-  //       const data = await res.json();
-  //       if (!res.ok) {
-  //         console.log("Login failed", data.message);
-  //         return;
-  //       }
-  //     //   login(data.appToken, data.user);
-  //     } catch (error) {
-  //       console.log(`error from handleSignin: ${error}`);
-  //     }
-  //   };
+  const handleGoogleSignin = async (idToken: string) => {
+    try {
+      const res = await fetch(
+        "http://192.168.1.119:3000/api/auth/handle-google-auth",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ idToken }),
+        },
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        console.log("Login failed", data.message);
+        return;
+      }
+      const { accessToken, refreshToken, user } = data;
+      login(accessToken, refreshToken, user);
+    } catch (error) {
+      console.log(`error from handleSignin: ${error}`);
+    }
+  };
 
   const googleSignIn = async () => {
     try {
@@ -49,7 +62,7 @@ export default function SignIn() {
         const { idToken } = response.data;
         console.log("Google Sign-In successful. ID Token:", idToken);
         if (!idToken) return;
-        // await handleGoogleSignin(idToken);
+        await handleGoogleSignin(idToken);
       } else {
         console.log(`Sign in cancelled by user: ${response.data}`);
       }
@@ -105,11 +118,23 @@ export default function SignIn() {
             className="flex-row items-center justify-center gap-3 rounded-2xl bg-[#9DC228] px-4 py-4 active:opacity-80"
             accessibilityRole="button"
             onPress={googleSignIn}
+            disabled={googleLoading}
           >
-            <FontAwesome name="google" size={18} color="#1a1a1a" />
-            <Text className="text-base font-semibold text-zinc-900">
-              Continue with Google
-            </Text>
+            {googleLoading ? (
+              <>
+                <ActivityIndicator color="#1a1a1a" />
+                <Text className="text-base font-semibold text-zinc-900">
+                  Signing in...
+                </Text>
+              </>
+            ) : (
+              <>
+                <FontAwesome name="google" size={18} color="#1a1a1a" />
+                <Text className="text-base font-semibold text-zinc-900">
+                  Sign in with Google
+                </Text>
+              </>
+            )}
           </Pressable>
 
           <Text className="text-center text-sm text-white">
