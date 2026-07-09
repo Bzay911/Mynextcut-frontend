@@ -18,6 +18,7 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import { useAuth } from "../../../contexts/auth-context";
+import { API_BASE_URL } from "../../constants/api-config";
 
 export default function SignIn() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function SignIn() {
   const handleGoogleSignin = async (idToken: string) => {
     try {
       const res = await fetch(
-        "http://192.168.1.119:3000/api/auth/handle-google-auth",
+        `${API_BASE_URL}/api/auth/handle-google-auth`,
         {
           method: "POST",
           headers: {

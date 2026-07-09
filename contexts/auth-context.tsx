@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ) => {
     setAccessToken(accessToken);
     setUser(userDate);
-    await SecureStore.setItemAsync("accessToken", accessToken);
+    await SecureStore.setItemAsync("accessToken", accessToken); // using securestore here than async storage (stores plain text) for better security
     await SecureStore.setItemAsync("refreshToken", refreshToken);
   };
 
@@ -59,8 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const restoreSession = async () => {
       try {
         const storedAccessToken = await SecureStore.getItemAsync("accessToken");
-        const storedRefreshToken =
-          await SecureStore.getItemAsync("refreshToken");
+        const storedRefreshToken = await SecureStore.getItemAsync("refreshToken");
 
         if (!storedAccessToken) {
           setLoading(false);
@@ -72,6 +71,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             Authorization: `Bearer ${storedAccessToken}`,
           },
         });
+
+        // tracking the current access token
+        let currentAccessToken = storedAccessToken; 
 
         if (!response.ok) {
           const refreshResponse = await fetch(
@@ -97,10 +99,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             await refreshResponse.json();
 
           await SecureStore.setItemAsync("accessToken", newAccessToken);
-
           await SecureStore.setItemAsync("refreshToken", newRefreshToken);
 
-          setAccessToken(newAccessToken);
+           currentAccessToken = newAccessToken;
 
           response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
             headers: {
@@ -112,6 +113,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (response.ok) {
           const { user } = await response.json();
           setUser(user);
+          setAccessToken(currentAccessToken);
         }
       } catch (error) {
         console.error("Error restoring session:", error);

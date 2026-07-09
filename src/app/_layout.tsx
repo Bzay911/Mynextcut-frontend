@@ -1,7 +1,5 @@
 import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
-// import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-// import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { AnimatedSplashOverlay } from "@/components/animated-icon";
 import "../global.css";
 import {useAuth, AuthProvider} from "../../contexts/auth-context";
@@ -12,7 +10,7 @@ import {useAuth, AuthProvider} from "../../contexts/auth-context";
     if (loading) {
       return null;
     }
-    
+
     return (
       <Stack>
         <Stack.Protected guard={!!accessToken}>

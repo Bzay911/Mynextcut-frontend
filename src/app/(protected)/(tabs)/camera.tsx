@@ -1,10 +1,11 @@
-import { View, Text, Button, Pressable } from "react-native";
+import { View, Text, Button, Pressable, Alert } from "react-native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Camera() {
   const router = useRouter();
@@ -25,6 +26,27 @@ export default function Camera() {
       </View>
     );
   }
+
+  const pickImageFromGallery = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(!permissionResult.granted) {
+      Alert.alert("Permission required", "Permission to access the gallery is required!");
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setUri(result.assets[0].uri);
+    }
+  }
+
 
   const toggleCameraFacing = () => {
     console.log("Toggling camera facing");
@@ -91,7 +113,7 @@ export default function Camera() {
         />
         <View className="bg-black w-full h-[120px] items-center justify-between flex-row p-2">
           <Pressable
-            onPress={toggleCameraFacing}
+            onPress={pickImageFromGallery}
             className="bg-gray-300 p-3 rounded-full m-2"
           >
             <Ionicons name="image" size={28} color="black" />
