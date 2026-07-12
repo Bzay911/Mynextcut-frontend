@@ -1,7 +1,7 @@
+import "../global.css";
 import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
 import { AnimatedSplashOverlay } from "@/components/animated-icon";
-import "../global.css";
 import {useAuth, AuthProvider} from "../../contexts/auth-context";
 
   function RootLayoutWithAuth() {

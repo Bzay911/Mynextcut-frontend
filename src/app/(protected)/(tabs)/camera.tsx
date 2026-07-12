@@ -28,10 +28,14 @@ export default function Camera() {
   }
 
   const pickImageFromGallery = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if(!permissionResult.granted) {
-      Alert.alert("Permission required", "Permission to access the gallery is required!");
+    if (!permissionResult.granted) {
+      Alert.alert(
+        "Permission required",
+        "Permission to access the gallery is required!",
+      );
       return;
     }
 
@@ -45,8 +49,7 @@ export default function Camera() {
     if (!result.canceled) {
       setUri(result.assets[0].uri);
     }
-  }
-
+  };
 
   const toggleCameraFacing = () => {
     console.log("Toggling camera facing");
@@ -84,8 +87,15 @@ export default function Camera() {
             <Text className="text-black text-xl">Retake</Text>
           </Pressable>
 
+        {/* This passes the URI to the AI page which is either the captured image or the selected image from the gallery */}
           <Pressable
-            onPress={toggleCameraFacing}
+            onPress={() => {
+              router.push({
+                pathname: "/(protected)/ai-page",
+                params: { imageUri: uri },
+              });
+              setUri(null);
+            }}
             className="bg-[#9DC228] py-4 px-6 rounded-full flex-row items-center gap-2"
           >
             <Ionicons name="checkmark" size={28} color="black" />
