@@ -20,6 +20,7 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useGeneratedImageStore } from "../../../store/generated-image-store";
 import { API_BASE_URL } from "../../constants/api-config";
 import { convertImageToJpeg } from "../../../utils/convert-image-to-jpeg";
+import { useAuth } from "../../../contexts/auth-context";
 
 type UploadFile = {
   uri: string;
@@ -29,6 +30,7 @@ type UploadFile = {
 
 export default function AiPage() {
   const router = useRouter();
+  const { accessToken } = useAuth();
   const { imageUri } = useLocalSearchParams<{ imageUri: string }>();
   const [userImageUri, setUserImageUri] = useState<string | null>(
     imageUri || null,
@@ -99,27 +101,33 @@ export default function AiPage() {
     clearGeneratedImage();
     setIsLoading(true);
 
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    //   router.push({
-    //     pathname: "/(protected)/image-displayer",
-    //     params: {
-    //       imageUri: testImage,
-    //     },
-    //   })
-    // }, 5000);
-
     uploadImages(userImageUri!, inspirationImageUri!, prompt)
       .then((response) => {
-        console.log("Upload successful:", response);
         setGeneratedImage(response.generatedImage);
         router.push("/(protected)/image-displayer");
       })
-      .catch((error) => {
+      .catch((error: Error & { status?: number }) => {
         console.error("Upload failed:", error);
+
+        if (error.status === 402) {
+          Alert.alert(
+            "Not enough credits",
+            "You don't have enough credits to generate an image. Please get more credits.",
+          );
+          router.push("/(protected)/get-credits");
+          return;
+        }
+
+        if (error.status === 400) {
+          // Bad request — e.g. missing images/prompt caught server-side too
+          Alert.alert("Something's missing", error.message);
+          return;
+        }
+
+        // Generic fallback — 500s, network errors, etc.
         Alert.alert(
           "Upload failed",
-          "There was an error uploading the images.",
+          "There was an error uploading the images. Please try again.",
         );
       })
       .finally(() => {
@@ -137,10 +145,8 @@ export default function AiPage() {
     uri2: string,
     userPrompt: string,
   ) => {
-
     const convertedUri1 = await convertImageToJpeg(uri1);
-    const convertedUri2 = await convertImageToJpeg(uri2);  
-
+    const convertedUri2 = await convertImageToJpeg(uri2);
     const userImage = buildFile(convertedUri1);
     const inspirationImage = buildFile(convertedUri2);
 
@@ -157,18 +163,23 @@ export default function AiPage() {
     );
     formData.append("userPrompt", userPrompt);
 
-    console.log("Formdata:", formData);
-
     const response = await fetch(`${API_BASE_URL}/api/images/upload-images`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
       method: "POST",
       body: formData,
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error("Upload failed");
+      const error = new Error(data.error || "Upload failed") as Error & {
+        status?: number;
+      };
+      error.status = response.status;
+      throw error;
     }
 
-    return response.json();
+    return data;
   };
 
   return (

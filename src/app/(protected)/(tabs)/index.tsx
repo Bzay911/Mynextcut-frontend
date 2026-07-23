@@ -91,7 +91,7 @@ export default function ProtectedIndex() {
         contentContainerStyle={{ paddingBottom: 32 }}
       >
         <View className="flex-row items-center justify-between gap-4">
-          <Text className="text-4xl font-bold text-white">MyNextCut</Text>
+          <Text className="text-4xl font-bold text-white">Mynextcut</Text>
           <Pressable
             onPress={() => router.push("/(protected)/get-credits")}
             style={{ backgroundColor: "#9DC228" }}
